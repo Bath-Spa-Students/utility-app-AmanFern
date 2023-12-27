@@ -1,16 +1,19 @@
 import time
 import sys
 
+#Defining function to simulate typing effect
 def typewrite(str):
-    for char in str:
-        time.sleep(0.08)
-        sys.stdout.write(char)
+    for letters in str:
+        time.sleep(0.04)
+        sys.stdout.write(letters)
         sys.stdout.flush()
 
+#Displaying welcome messages
 typewrite("\nHello there!\n")
 time.sleep(0.5)
 typewrite("Welcome to Aman's Vending Machine\n")
 
+#Setting menu of available food and beverage items
 vending_inventory = {
     "Food": {
         "A1": {"Name": "Twix", "Cost": 3.00, "Stock": 15},
@@ -27,6 +30,7 @@ vending_inventory = {
     }
 }
 
+#Displaying food menu
 print("\n")
 typewrite("SELECT YOUR FOOD AND BEVERAGES\n")
 print("\n")
@@ -36,13 +40,15 @@ food_options = vending_inventory["Food"]
 
 for code, food in food_options.items():
     typewrite(f"{code}. {food['Name']} - AED{food['Cost']} \n")
+
+#Displaying beverage menu
 print()
 print("                               * Beverages *")
 beverage_options = vending_inventory["Beverages"]
 for code, drink in beverage_options.items():
     typewrite(f"{code}. {drink['Name']} - AED{drink['Cost']} \n")
-print()
 
+#while loop for the purchasing
 while True:
     selected_code = input("Enter the code of the item you want to purchase: ")
 
@@ -53,7 +59,8 @@ while True:
     else:
         print("Invalid code. Please try again.")
         continue
-
+#Above section is to check whether the code that the user inputted is in the menu
+    
     if selected_item['Stock'] <= 0:
         print("Out of stock. Please choose another item.")
         continue
@@ -65,10 +72,11 @@ while True:
         continue
 
     change = cash_inserted - selected_item['Cost']
-    selected_item['Stock'] -= 1  # Deduct one from stock
+    selected_item['Stock'] -= 1  #Deducting one from stock
     typewrite(f"Dispensing {selected_item['Name']}. Your change is AED{change:.2f} \n")
 
-    if input("Do you want to buy another item? (yes/no): ").lower() != 'yes':
+    if input("Do you want to buy another item? (yes/no): ").lower() != 'yes': #If user hits no the program ends
         break
 
 typewrite("Thank you! Enjoy your food :)\n")
+
